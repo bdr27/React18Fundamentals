@@ -1,4 +1,5 @@
 import Banner from "./banner"
+import HouseList from "./houseList";
 
 const App = () => {
     const jsx = <div>Hello World</div>
@@ -6,7 +7,7 @@ const App = () => {
         <div>
             {jsx}
             <Banner>Providing houses all over the world</Banner>
-            <Banner headerText="Some other header" />
+            <HouseList/>
         </div>
     );
 };
