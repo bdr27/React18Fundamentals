@@ -6,7 +6,7 @@ import LoadingIndicator from "./loadingIndicatior";
 
 
 
-const HouseList = ({selectedHouse}) => {
+const HouseList = () => {
     //const [houses, setHouses] = useState([]);
     //const counter = useRef(0);
     const {houses, setHouses, loadingState} = useHouses();
@@ -50,7 +50,7 @@ const HouseList = ({selectedHouse}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {houses.map(house => <HouseRow key={house.id} house={house} selectHouse={selectedHouse}/>)}
+                    {houses.map(house => <HouseRow key={house.id} house={house} />)}
                 </tbody>
             </table>
             <AddHouseButton addHouse={addHouse}/>
