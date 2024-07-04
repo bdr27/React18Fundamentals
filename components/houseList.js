@@ -1,21 +1,29 @@
-import { useState, useEffect } from "react";
 import HouseRow, { HouseRowMem } from "./houseRow";
 import AddHouseButton from "./addHouseButton.js";
+import useHouses from "@/hooks/useHouses";
+import loadingStatus from "@/helpers/loadingStatus";
+import LoadingIndicator from "./loadingIndicatior";
 
 
 
-const HouseList = () => {
-    const [houses, setHouses] = useState([]);
-    const [counter, setCounter] = useState(0);
+const HouseList = ({selectedHouse}) => {
+    //const [houses, setHouses] = useState([]);
+    //const counter = useRef(0);
+    const {houses, setHouses, loadingState} = useHouses();
 
-    useEffect(() => {
-        const fetchHouses = async () => {
-            const response = await fetch("/api/houses");
-            const houses = await response.json();
-            setHouses(houses);
-        }
-        fetchHouses();        
-    }, []);
+    if(loadingState !== loadingStatus.loaded){
+        return <LoadingIndicator loadingState = {loadingState} />
+    }
+
+    // useEffect(() => {
+    //     const fetchHouses = async () => {
+    //         const response = await fetch("/api/houses");
+    //         const houses = await response.json();
+    //         setHouses(houses);
+    //     }
+    //     fetchHouses();
+    //     counter.current++;
+    // }, []);
 
     const addHouse = () => {
         setHouses([...houses, { 
@@ -24,8 +32,7 @@ const HouseList = () => {
             country: "USA", 
             price: 1000000
          },
-        ]);        
-        setCounter(current => counter + 1)
+        ]);
     }
     return (
         <>
@@ -43,12 +50,12 @@ const HouseList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {houses.map(house => <HouseRow key={house.id} {...house} />)}
+                    {houses.map(house => <HouseRow key={house.id} house={house} selectHouse={selectedHouse}/>)}
                 </tbody>
             </table>
             <AddHouseButton addHouse={addHouse}/>
-            
-            <div>Counter: {counter}</div>
+{/*             
+            <div>Counter: {counter.current}</div> */}
         </>
     )
 }
