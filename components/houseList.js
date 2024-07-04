@@ -1,24 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HouseRow, { HouseRowMem } from "./houseRow";
+import AddHouseButton from "./addHouseButton.js";
 
-const houseArray = [
-    {
-        id: 1,
-        address: "12 Vallery of Kings, Geneva",
-        country: "Switzerland",
-        price: 900000,
-    },
-    {
-        id: 2,
-        address: "89 Road of Forks, Bern",
-        country: "Switzerland",
-        price: 500000,
-    }
-]
+
 
 const HouseList = () => {
-    const [houses, setHouses] = useState(houseArray);
+    const [houses, setHouses] = useState([]);
     const [counter, setCounter] = useState(0);
+
+    useEffect(() => {
+        const fetchHouses = async () => {
+            const response = await fetch("/api/houses");
+            const houses = await response.json();
+            setHouses(houses);
+        }
+        fetchHouses();        
+    }, []);
 
     const addHouse = () => {
         setHouses([...houses, { 
@@ -46,12 +43,11 @@ const HouseList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {houses.map(house => <HouseRowMem key={house.id} {...house} />)}
+                    {houses.map(house => <HouseRow key={house.id} {...house} />)}
                 </tbody>
             </table>
-            <button className="btn btn-primary" onClick={addHouse}>
-                Add
-            </button>
+            <AddHouseButton addHouse={addHouse}/>
+            
             <div>Counter: {counter}</div>
         </>
     )
