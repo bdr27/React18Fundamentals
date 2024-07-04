@@ -1,6 +1,4 @@
 import currencyFormatter from "@/helpers/currencyFormatter";
-import React from "react";
-
 const HouseRow = ({address, country, price}) => {
     return (
         <tr>
@@ -11,7 +9,4 @@ const HouseRow = ({address, country, price}) => {
     )
 };
 
-const HouseRowMem = React.memo(HouseRow);
-
 export default HouseRow;
-export {HouseRowMem};
